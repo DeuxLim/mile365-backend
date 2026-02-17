@@ -56,6 +56,10 @@ class MembershipService
             'training_types' => $request->training_types,
             'experience_level' => $request->experience_level,
             'years_running' => $request->years_running,
+            'weekly_distance_km' => $request->weekly_distance_km,
+            'average_run_pace' => $request->average_run_pace,
+            'preferred_run_time' => $request->preferred_run_time,
+            'goals' => $request->goals,
             'joined_at' => now(),
         ]);
 

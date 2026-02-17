@@ -20,6 +20,10 @@ class Member extends Model
         'training_types',
         'experience_level',
         'years_running',
+        'weekly_distance_km',
+        'average_run_pace',
+        'preferred_run_time',
+        'goals',
         'joined_at',
     ];
 

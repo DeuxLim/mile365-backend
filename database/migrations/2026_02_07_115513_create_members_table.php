@@ -30,6 +30,10 @@ return new class extends Migration
             $table->json('training_types')->nullable();
             $table->string('experience_level')->nullable();
             $table->integer('years_running')->nullable();
+            $table->integer('weekly_distance_km')->nullable();
+            $table->string('average_run_pace')->nullable();
+            $table->string('preferred_run_time')->nullable();
+            $table->text('goals')->nullable();
 
             $table->date('joined_at'); // date approved
 
