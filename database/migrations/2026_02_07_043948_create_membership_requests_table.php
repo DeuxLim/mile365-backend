@@ -35,31 +35,31 @@ return new class extends Migration
             $table->string('province')->nullable();
             $table->string('city')->nullable();
             $table->string('barangay')->nullable();
+            $table->boolean('location_confirmation')->default(false);
 
             /*
             |--------------------------------------------------------------------------
             | TRAINING PROFILE
             |--------------------------------------------------------------------------
-            | Multi-select: running, gym, hybrid, swimming, cycling, triathlon
             */
-            $table->json('training_types')->nullable();
-
-            $table->enum('experience_level', [
-                'beginner',
-                'intermediate',
-                'advanced'
-            ])->nullable();
-
+            $table->json('training_types')->nullable(); // Multi-select: running, gym, hybrid, swimming, cycling, triathlon
+            $table->enum('experience_level', ['beginner', 'intermediate', 'advanced'])->nullable();
             $table->integer('years_running')->nullable();
-            $table->string('average_run_pace')->nullable();
-            // example: 5:30/km
-
+            $table->string('average_run_pace')->nullable(); // example: 5:30/km
             $table->integer('weekly_distance_km')->nullable();
-            $table->string('preferred_run_time')->nullable();
-            // morning / evening / weekends
+            $table->string('preferred_run_time')->nullable(); // morning / evening / weekends
+            $table->text('goals')->nullable(); // marathon, weight loss, fitness etc
 
-            $table->text('goals')->nullable();
-            // marathon, weight loss, fitness etc
+            /*
+            |--------------------------------------------------------------------------
+            | COMMUNITY PLATFORMS
+            |--------------------------------------------------------------------------
+            */
+            $table->boolean('fb_group_joined')->default(false);
+            $table->boolean('community_chat_joined')->default(false);
+            $table->json('platforms_joined')->nullable();
+            $table->string('facebook_profile_name')->nullable();
+            $table->string('messenger_name')->nullable();
 
             /*
             |--------------------------------------------------------------------------
@@ -69,6 +69,16 @@ return new class extends Migration
             $table->string('emergency_contact_name')->nullable();
             $table->string('emergency_contact_phone')->nullable();
             $table->text('medical_conditions')->nullable();
+            $table->boolean('fitness_acknowledgment')->default(false);
+
+            /*
+            |--------------------------------------------------------------------------
+            | MEMBERSHIP EXPECTATIONS
+            |--------------------------------------------------------------------------
+            */
+            $table->boolean('attendance_commitment')->default(false);
+            $table->boolean('activity_expectation')->default(false);
+            $table->boolean('community_behavior')->default(false);
 
             /*
             |--------------------------------------------------------------------------
@@ -85,25 +95,24 @@ return new class extends Migration
             */
             $table->boolean('agreed_to_rules')->default(false);
             $table->timestamp('agreed_at')->nullable();
+            $table->boolean('safety_commitment')->default(false);
+            $table->boolean('media_consent')->default(false);
 
             /*
             |--------------------------------------------------------------------------
             | ADMIN REVIEW SYSTEM
             |--------------------------------------------------------------------------
             */
-            $table->enum('status', [
-                'pending',
-                'approved',
-                'rejected',
-                'waitlisted'
-            ])->default('pending');
-
+            $table->enum('status', ['pending', 'approved', 'rejected', 'waitlisted'])->default('pending');
             $table->foreignId('reviewed_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamp('reviewed_at')->nullable();
             $table->text('admin_notes')->nullable();
 
-            $table->timestamps();
 
+            /**
+             * Metadata
+             */
+            $table->timestamps();
             $table->index('status');
         });
     }

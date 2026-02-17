@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreMembershipRequest;
+use App\Http\Requests\_MembershipRequest;
 use App\Services\MembershipService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class MembershipController extends Controller
         $this->membershipService = $membershipService;
     }
 
-    public function store(StoreMembershipRequest $request): JsonResponse
+    public function store(_MembershipRequest $request): JsonResponse
     {
         $membership = $this->membershipService
             ->submitApplication($request->validated());
