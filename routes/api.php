@@ -10,7 +10,7 @@ Route::get('/letsgo365', function () {
     ], 200);
 });
 
-Route::post('/join', [MembershipController::class, 'store']);
+Route::post('/membership-requests', [MembershipController::class, 'store']);
 Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::get('/membership-requests', [MembershipController::class, 'index']);
     Route::patch('/membership-requests/{id}/approve', [MembershipController::class, 'approve']);
