@@ -16,15 +16,20 @@ class SuperAdminSeeder extends Seeder
     public function run(): void
     {
         // Create super admin
-        $user = User::create([
-            'full_name' => 'Deux Lim',
-            'email' => 'limdeux27@gmail.com',
-            'password' => Hash::make('Test123123!'),
-            'status' => 'active',
-        ]);
+        $user = User::updateOrCreate(
+            ['email' => 'limdeux27@gmail.com'],
+            [
+                'full_name' => 'Deux Lim',
+                'password' => Hash::make('Test123123!'),
+                'status' => 'active',
+            ]
+        );
 
         // Assign Role to the created user
         $role = Role::where('name', 'super_admin')->first();
-        $user->roles()->attach($role->id);
+        if (!$role) {
+            throw new \Exception('Role super_admin does not exist. Seed roles first.');
+        }
+        $user->roles()->syncWithoutDetaching([$role->id]);
     }
 }
