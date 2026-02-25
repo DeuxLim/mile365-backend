@@ -16,5 +16,5 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::patch('/membership-requests/{id}/approve', [MembershipController::class, 'approve']);
     Route::patch('/membership-requests/{id}/reject', [MembershipController::class, 'reject']);
 });
+
 Route::post('/admin/login', [AuthController::class, 'login']);
-Route::post('/admin/register', [AuthController::class, 'register']);
