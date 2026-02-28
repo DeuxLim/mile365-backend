@@ -16,19 +16,22 @@ class AdminSeeder extends Seeder
     {
         $admins = [
             [
-                'full_name' => 'Kenneth Marcelino',
+                'first_name' => 'Kenneth',
+                'last_name' => 'Marcelino',
                 'email' => 'kennethmarcelino@gmail.com',
                 'password' => 'Test123123!',
                 'status' => 'active',
             ],
             [
-                'full_name' => 'Daniel Banawa',
+                'first_name' => 'Daniel',
+                'last_name' => 'Banawa',
                 'email' => 'danielbanawa@gmail.com',
                 'password' => 'Test123123!',
                 'status' => 'active',
             ],
             [
-                'full_name' => 'Conrad Cruz',
+                'first_name' => 'Conrad',
+                'last_name' => 'Cruz',
                 'email' => 'conradcruz@gmail.com',
                 'password' => 'Test123123!',
                 'status' => 'active',
@@ -45,7 +48,8 @@ class AdminSeeder extends Seeder
             $user = User::updateOrCreate(
                 ['email' => $admin['email']],
                 [
-                    'full_name' => $admin['full_name'],
+                    'first_name' => $admin['first_name'],
+                    'last_name' => $admin['last_name'],
                     'password' => Hash::make($admin['password']),
                     'status' => $admin['status'],
                 ]

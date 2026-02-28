@@ -19,7 +19,8 @@ class SuperAdminSeeder extends Seeder
         $user = User::updateOrCreate(
             ['email' => 'limdeux27@gmail.com'],
             [
-                'full_name' => 'Deux Lim',
+                'first_name' => 'Deux',
+                'last_name' => 'Lim',
                 'password' => Hash::make('Test123123!'),
                 'status' => 'active',
             ]
