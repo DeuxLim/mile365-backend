@@ -11,11 +11,11 @@ Route::get('/letsgo365', function () {
 });
 
 Route::post('/membership-requests', [MembershipController::class, 'store']);
+Route::post('/admin/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
+    Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/membership-requests', [MembershipController::class, 'index']);
     Route::patch('/membership-requests/{id}/approve', [MembershipController::class, 'approve']);
     Route::patch('/membership-requests/{id}/reject', [MembershipController::class, 'reject']);
 });
-
-Route::post('/admin/login', [AuthController::class, 'login']);
