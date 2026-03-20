@@ -27,7 +27,8 @@ COPY --from=build /var/www/html /var/www/html
 COPY . .
 
 RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache
+RUN chmod +x scripts/start-web.sh scripts/start-worker.sh
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
+CMD ["./scripts/start-web.sh"]

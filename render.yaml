@@ -11,8 +11,6 @@ services:
     plan: free
     rootDir: .
     dockerfilePath: ./Dockerfile
-    dockerCommand: sh -c 'php artisan serve --host=0.0.0.0 --port=${PORT:-10000}'
-    preDeployCommand: php artisan migrate --force
     healthCheckPath: /up
     envVars:
       - key: APP_ENV
@@ -98,7 +96,7 @@ services:
     plan: free
     rootDir: .
     dockerfilePath: ./Dockerfile
-    dockerCommand: sh -c 'php artisan queue:work --sleep=3 --tries=3 --max-time=3600'
+    dockerCommand: ./scripts/start-worker.sh
     envVars:
       - key: APP_ENV
         value: production
