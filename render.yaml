@@ -1,0 +1,178 @@
+databases:
+  - name: m365-backend-db
+    databaseName: m365_backend
+    user: m365_backend_user
+    plan: free
+
+services:
+  - type: web
+    name: m365-backend
+    runtime: docker
+    plan: free
+    rootDir: .
+    dockerfilePath: ./Dockerfile
+    dockerCommand: sh -c 'php artisan serve --host=0.0.0.0 --port=${PORT:-10000}'
+    preDeployCommand: php artisan migrate --force
+    healthCheckPath: /up
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: APP_KEY
+        generateValue: true
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DATABASE_URL
+        fromDatabase:
+          name: m365-backend-db
+          property: connectionString
+      - key: DB_HOST
+        fromDatabase:
+          name: m365-backend-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: m365-backend-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: m365-backend-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: m365-backend-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: m365-backend-db
+          property: password
+      - key: DB_SCHEMA
+        value: public
+      - key: DB_SSLMODE
+        value: require
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: MAIL_MAILER
+        value: resend
+      - key: RESEND_API_KEY
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: MESSENGER_LINK
+        sync: false
+      - key: RUNCLUB_EMAIL
+        sync: false
+      - key: FACEBOOK_PAGE_LINK
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_KEY
+        sync: false
+      - key: CLOUDINARY_SECRET
+        sync: false
+      - key: CLOUDINARY_URL
+        sync: false
+      - key: SUPER_ADMIN_EMAIL
+        sync: false
+      - key: SUPER_ADMIN_FIRST_NAME
+        sync: false
+      - key: SUPER_ADMIN_LAST_NAME
+        sync: false
+      - key: SUPER_ADMIN_PASSWORD
+        sync: false
+
+  - type: worker
+    name: m365-backend-worker
+    runtime: docker
+    plan: free
+    rootDir: .
+    dockerfilePath: ./Dockerfile
+    dockerCommand: sh -c 'php artisan queue:work --sleep=3 --tries=3 --max-time=3600'
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_URL
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: APP_KEY
+        sync: false
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DATABASE_URL
+        fromDatabase:
+          name: m365-backend-db
+          property: connectionString
+      - key: DB_HOST
+        fromDatabase:
+          name: m365-backend-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: m365-backend-db
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: m365-backend-db
+          property: database
+      - key: DB_USERNAME
+        fromDatabase:
+          name: m365-backend-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: m365-backend-db
+          property: password
+      - key: DB_SCHEMA
+        value: public
+      - key: DB_SSLMODE
+        value: require
+      - key: SESSION_DRIVER
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: MAIL_MAILER
+        value: resend
+      - key: RESEND_API_KEY
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: MESSENGER_LINK
+        sync: false
+      - key: RUNCLUB_EMAIL
+        sync: false
+      - key: FACEBOOK_PAGE_LINK
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_KEY
+        sync: false
+      - key: CLOUDINARY_SECRET
+        sync: false
+      - key: CLOUDINARY_URL
+        sync: false
+      - key: SUPER_ADMIN_EMAIL
+        sync: false
+      - key: SUPER_ADMIN_FIRST_NAME
+        sync: false
+      - key: SUPER_ADMIN_LAST_NAME
+        sync: false
+      - key: SUPER_ADMIN_PASSWORD
+        sync: false
